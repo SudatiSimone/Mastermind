@@ -19,7 +19,7 @@ At the start of the game all the value are set to 1/6 = 0.167 so the probabiliti
 sfdf
 
 ### **How to play?**
-
+--> Download or clone the repository and run the main.py file
 
 ### **Rules:**
 Think about a sequence of 4 colours choosen between the six colours: red, yellow, black, white, orange, purple.
