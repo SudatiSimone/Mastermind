@@ -37,7 +37,7 @@ while i < numberIterationGame and gameOver is False:
     position = 0
     while position < 4:
         if solution[position] == "Red":
-            colour = 0  # prima riga contiene probabilità del rosso
+            colour = 0  # prima colonna contiene probabilità del rosso
         elif solution[position] == "Orange":
             colour = 1
         elif solution[position] == "Yellow":
@@ -51,32 +51,37 @@ while i < numberIterationGame and gameOver is False:
 
         count = 0  # default : no colour-position with 0% probability
         if value == 0:  # All the colour are in bad position
-            probability[position, colour] = 0  # It's 100% the incorrect position for the select colour
-            increase = 0.20
-            # count how many position are not zero
+            probability[position, colour] = 0.0  # It's 100% the incorrect position for the select colour
+            increase_NotSelected = 1/5
+            # count how many position are zero
             for x in range(6):
-                if probability[position, x] == 0:
+                if probability[position, x] == 0.0:
                     count += 1
             # use count to calculate the increase
             if count != 0 and count != 1:
-                increase = 1 / (6 - count)
+                increase_NotSelected = 1 / (6 - count)
 
             # increase probability of not selected colour
             for x in range(6):
-                # if not zero increase probability of +0.20
                 if probability[position, x] != 0:
-                    probability[position, x] += increase
+                    probability[position, x] += increase_NotSelected
 
         elif value == 1:  # Only one colour-position is correct
+            increase_Selected = 0.25  # It's 25% the correct position for the selected colour
+            increase_NotSelected = 0.75 / 5  # The remaining probability
             # count how many position are not zero
             for x in range(6):
                 if probability[position, x] == 0.0:
                     count += 1
-            probability[position, colour] -= 75  # It's 75% the incorrect position for the selected colour
+            # use count to calculate the increase and decrease
+            if count >= 1:
+                # increase don't change
+                increase_NotSelected += (0.75 / 5) * count / (5 - count)
+
 
         elif value == 2:
-            increase = 0.50  # It's 50% the correct position for the selected colour
-            decrease = 0.1  # The remaining probability 0.50/5
+            increase_Selected = 0.50  # It's 50% the correct position for the selected colour
+            increase_NotSelected = 0.1  # The remaining probability 0.50/5
             # count how many position are zero
             for x in range(6):
                 if probability[position, x] == 0.0:
@@ -84,37 +89,40 @@ while i < numberIterationGame and gameOver is False:
             # use count to calculate the increase and decrease
             if count >= 1:
                 # increase don't change
-                decrease += (0.50 / 5) * count / (5 - count)
-            if probability[position, colour] != 0.0:
-                probability[position, colour] = increase
-            for x in range(6):
-                if probability[position, x] != increase:
-                    probability[position, x] -= decrease
+                increase_NotSelected += (0.50 / 5) * count / (5 - count)
+
         elif value == 3:
-            increase = 0.75  # It's 75% the correct position for the selected colour
-            decrease = 0.25 / 5  # The others colour in that position
-            # count how many position are not zero
+            increase_Selected = 0.75  # It's 75% the correct position for the selected colour
+            increase_NotSelected = 0.25 / 5  # The remaining probability
+            # count how many position are zero
             for x in range(6):
                 if probability[position, x] == 0.0:
                     count += 1
+
             # use count to calculate the increase
-            # TODO see value==2
-
-            if probability[position, x] != 0.0:
-                probability[position, colour] = increase
-
+            if count >= 1:
+                # increase don't change
+                increase_NotSelected += (0.25 / 5) * count / (5 - count)
+        if value != 0:
+            if probability[position, colour] != 0.0:
+                probability[position, colour] = increase_Selected
             for x in range(6):
-                if probability[position, x] != 0.75:
-                    probability[position, x] -= decrease
-
+                if probability[position, x] != increase_Selected and probability[position, x] != 0.0:
+                    probability[position, x] += increase_NotSelected
         position += 1
 
     # Control all the position in matrix, if there are negative value set it to zero
-    # TODO se ci sono degli 1 metti tutti i compari a zero
+    # If one position is 1 all the other correlated colours are set to zero
     for x in range(6):
         for y in range(4):
             if probability[y, x] < 0.0:
                 probability[y, x] = 0.0
+            elif probability[y, x] >= 1.0:
+                probability[y, x] = 1.0
+                for t in range(6):
+                    if probability[y, t] != 1.0:
+                        probability[y, t] = 0.0
+
 
     i += 1
     print("miao")
