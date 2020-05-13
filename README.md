@@ -33,5 +33,6 @@ The computer output at video a second solutions. Input the number of correct cou
 And so go on...
 
 If in ten iterations the computer guess your sequence ==> computer wins the game
+
 else ==> you won the game! :)
 
