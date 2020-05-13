@@ -1,6 +1,39 @@
 from numpy import *
 import random
 
+
+def calculate_solution(list):
+    color = "Red"  # di default
+    n0 = list[0] * 100
+    n0 = int(n0)
+    n1 = list[1] * 100
+    n1 = int(n1)
+    n2 = list[2] * 100
+    n2 = int(n2)
+    n3 = list[3] * 100
+    n3 = int(n3)
+    n4 = list[4] * 100
+    n4 = int(n4)
+    n5 = list[5] * 100
+    n5 = int(n5)
+
+    my_list = ['R'] * n0 + ['O'] * n1 + ['Y'] * n2 + ['B'] * n3 + ['Y'] * n4 + ['W'] * n5
+    name = random.choice(my_list)
+    if name == 'R':
+        color = "Red"
+    elif name == 'O':
+        color = "Orange"
+    elif name == 'Y':
+        color = "Yellow"
+    elif name == 'B':
+        color = "Black"
+    elif name == 'P':
+        color = "Purple"
+    elif name == 'W':
+        color = "White"
+    return color
+
+
 # Matrix
 # Straight: color (Red=R, Orange=O, Black=B, Purple=P, white=W, yellow=Y)
 # Column: the position ( 1, 2, 3, 4)
@@ -9,26 +42,28 @@ probability = array([[0.167, 0.167, 0.167, 0.167, 0.167, 0.167],
                      [0.167, 0.167, 0.167, 0.167, 0.167, 0.167],
                      [0.167, 0.167, 0.167, 0.167, 0.167, 0.167]])
 
-# As first iteration the computer choose random the sequence of colour
-# TODO weighted random
-
+# As first iteration the computer choose deterministic the sequence of colours
 solution = ["Red", "White", "Black", "Red"]
 
 print("Choose a sequence of 4 colours (red, orange, yellow, black, purple, white) ")
 input("Press Enter to continue...")
-print("Round 1: ", solution)
 
 i = 0
 numberIterationGame = 10  # numbers of rounds available for computer to guess
 gameOver = False
+increase_Selected = 0
+increase_NotSelected = 0
 
 while i < numberIterationGame and gameOver is False:
 
     # Ask how many colors are in the correct position
     while True:
         print(probability)
+        print("Round " + str(i + 1) + " : ", solution)
         print("How many element are correct?")
         value = int(input("0 or 1 or 2 or 3 or 4: "))
+        print()
+        print()
         if value == 0 or value == 1 or value == 2 or value == 3 or value == 4:
             break
 
@@ -54,7 +89,7 @@ while i < numberIterationGame and gameOver is False:
         count = 0  # default : no colour-position with 0% probability
         if value == 0:  # All the colour are in bad position
             probability[position, colour] = 0.0  # It's 100% the incorrect position for the select colour
-            increase_NotSelected = 1/5
+            increase_NotSelected = 1 / 5
             # count how many position are zero
             for x in range(6):
                 if probability[position, x] == 0.0:
@@ -125,42 +160,22 @@ while i < numberIterationGame and gameOver is False:
                     if probability[y, t] != 1.0:
                         probability[y, t] = 0.0
 
-
     i += 1
-    print("miao")
+    # print("miao")
+    # print(calculate_solution(probability[0, :]))
+    # print(calculate_solution(probability[1, :]))
+    # print(calculate_solution(probability[2, :]))
+    # print(calculate_solution(probability[3, :]))
 
     # Choose the new solution
-    # TODO funzione random pesata tra i colori a seconda del valore per ogni posizione
+    solution = [calculate_solution(probability[0, :]), calculate_solution(probability[1, :]),
+                calculate_solution(probability[2, :]), calculate_solution(probability[3, :])]
 
 if value == 4:
     print()
     print("---------- Computer won the game! :) -----------")
-    print("In " + str(i) + " iterations")
+    print("---------- In " + str(i) + " iterations---------")
 elif value < 4:
     print()
     print("---------- You have win the game! :) -----------")
-    print("In " + str(i) + " iterations")
-
-
-calculate_solution :
-my_list = ['A'] * 5 + ['B'] * 5 + ['C'] * 90
-
-
-def calculate_solution( list ):
-
-   color = "Red"  # di default
-   my_list = ['R'] * list[0] + ['O'] * list[1] + ['Y'] * list[2] +['B'] * list[3] + ['Y'] * list[4] +['W'] * list[5]
-   name = random.choice(my_list)
-   if name == 'R':
-       color = "Red"
-   elif name == 'O':
-       color = "Orange"
-   elif name == 'Y':
-       color = "Yellow"
-   elif name == 'B':
-       color = "Black"
-   elif name == 'P':
-       color = "Purple"
-   elif name == 'W':
-       color = "White"
-   return color
+    print("---------- In " + str(i) + " iterations---------")
