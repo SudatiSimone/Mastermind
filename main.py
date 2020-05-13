@@ -10,7 +10,7 @@ probability = array([[0.167, 0.167, 0.167, 0.167, 0.167, 0.167],
 
 # As first iteration the computer choose random the sequence of colour
 # TODO random
-solution = ["Red", "Red", "Red", "Red"]
+solution = ["Red", "White", "Black", "Red"]
 
 print("Choose a sequence of 4 colours (red, orange, yellow, black, purple, white) ")
 input("Press Enter to continue...")
@@ -76,38 +76,41 @@ while i < numberIterationGame and gameOver is False:
 
         elif value == 2:
             increase = 0.50  # It's 50% the correct position for the selected colour
-            # count how many position are not zero
+            decrease = 0.50 / 5
+            # count how many position are zero
             for x in range(6):
                 if probability[position, x] == 0.0:
                     count += 1
-            # use count to calculate the increase
-            if count != 0 and count != 1:
-                increase = 1 / (6 - count)
-            probability[position, colour] += increase
+            # use count to calculate the increase and decrease
+            if count >= 1:
+                increase = 0.50  # Don't change!
+                decrease = 0.50 / (5 - count)
+            if probability[position, colour] != 0.0:
+                probability[position, colour] = increase
+            for x in range(6):
+                if probability[position, x] != 0.0 and probability[position, colour] != increase:
+                    probability[position, x] -= decrease
         elif value == 3:
             increase = 0.75  # It's 75% the correct position for the selected colour
-            decrease = 0.25/5  # The others colour in that position
+            decrease = 0.25 / 5  # The others colour in that position
             # count how many position are not zero
             for x in range(6):
                 if probability[position, x] == 0.0:
                     count += 1
             # use count to calculate the increase
-            # NB: if three colour are correct and there is a zero
-            # ==> all the 3 colour are correct
-            if count != 0:
-                increase = 1
-                decrease = 1
+            # TODO see value==2
 
             if probability[position, x] != 0.0:
                 probability[position, colour] = increase
 
             for x in range(6):
-                if probability[position, x] != 0.75 and probability[position, x] != 1:
+                if probability[position, x] != 0.75:
                     probability[position, x] -= decrease
 
         position += 1
 
     # Control all the position in matrix, if there are negative value set it to zero
+    # TODO se ci sono degli 1 metti tutti i compari a zero
     for x in range(6):
         for y in range(4):
             if probability[y, x] < 0.0:
