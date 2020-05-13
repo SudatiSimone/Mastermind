@@ -16,7 +16,7 @@ Y corresponds to the selected colour
 In this way we could update the value of probability for all couple (position, colour).
 
 At the start of the game all the value are set to 1/6 = 0.167 so the probabilities are equal.
-sfdf
+
 
 ### **How to play?**
 --> Download or clone the repository and run the main.py file
