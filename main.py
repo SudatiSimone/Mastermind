@@ -76,19 +76,19 @@ while i < numberIterationGame and gameOver is False:
 
         elif value == 2:
             increase = 0.50  # It's 50% the correct position for the selected colour
-            decrease = 0.50 / 5
+            decrease = 0.1  # The remaining probability 0.50/5
             # count how many position are zero
             for x in range(6):
                 if probability[position, x] == 0.0:
                     count += 1
             # use count to calculate the increase and decrease
             if count >= 1:
-                increase = 0.50  # Don't change!
-                decrease = 0.50 / (5 - count)
+                # increase don't change
+                decrease += (0.50 / 5) * count / (5 - count)
             if probability[position, colour] != 0.0:
                 probability[position, colour] = increase
             for x in range(6):
-                if probability[position, x] != 0.0 and probability[position, colour] != increase:
+                if probability[position, x] != increase:
                     probability[position, x] -= decrease
         elif value == 3:
             increase = 0.75  # It's 75% the correct position for the selected colour
