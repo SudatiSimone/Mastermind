@@ -4,7 +4,7 @@ My program in python to solve mastermind game.
 
 ### **My idea to solve the problem:**
 
-To use a matrix, a position is selected with (x,y) where x stands for straights and y for columns.
+Using a matrix, a position is selected with (x,y) where x stands for straights and y for columns.
 
 X corresponds to the position in the sequence
 
