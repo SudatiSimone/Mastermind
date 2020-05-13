@@ -1,4 +1,5 @@
 from numpy import *
+import random
 
 # Matrix
 # Straight: color (Red=R, Orange=O, Black=B, Purple=P, white=W, yellow=Y)
@@ -9,7 +10,8 @@ probability = array([[0.167, 0.167, 0.167, 0.167, 0.167, 0.167],
                      [0.167, 0.167, 0.167, 0.167, 0.167, 0.167]])
 
 # As first iteration the computer choose random the sequence of colour
-# TODO random
+# TODO weighted random
+
 solution = ["Red", "White", "Black", "Red"]
 
 print("Choose a sequence of 4 colours (red, orange, yellow, black, purple, white) ")
@@ -138,3 +140,27 @@ elif value < 4:
     print()
     print("---------- You have win the game! :) -----------")
     print("In " + str(i) + " iterations")
+
+
+calculate_solution :
+my_list = ['A'] * 5 + ['B'] * 5 + ['C'] * 90
+
+
+def calculate_solution( list ):
+
+   color = "Red"  # di default
+   my_list = ['R'] * list[0] + ['O'] * list[1] + ['Y'] * list[2] +['B'] * list[3] + ['Y'] * list[4] +['W'] * list[5]
+   name = random.choice(my_list)
+   if name == 'R':
+       color = "Red"
+   elif name == 'O':
+       color = "Orange"
+   elif name == 'Y':
+       color = "Yellow"
+   elif name == 'B':
+       color = "Black"
+   elif name == 'P':
+       color = "Purple"
+   elif name == 'W':
+       color = "White"
+   return color
