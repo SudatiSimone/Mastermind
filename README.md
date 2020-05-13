@@ -4,7 +4,7 @@ My program in python to solve mastermind game.
 
 ### **My idea to solve the problem:**
 
-To use a matrix where in a position (x,y) where x stands for straights and y for columns.
+To use a matrix, a position is selected with (x,y) where x stands for straights and y for columns.
 
 X corresponds to the position in the sequence
 
@@ -14,4 +14,7 @@ Y corresponds to the selected colour
      style="float: left; margin-right: 10px;" />
 
 In this way we could update the value of probability for all couple (position, colour).
+
+At the start of the game all the value are set to 1/6 = 0.167 so the probabilities are equal.
+
 
