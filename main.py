@@ -17,7 +17,7 @@ def calculate_solution(list):
     n5 = list[5] * 100
     n5 = int(n5)
 
-    my_list = ['R'] * n0 + ['O'] * n1 + ['Y'] * n2 + ['B'] * n3 + ['Y'] * n4 + ['W'] * n5
+    my_list = ['R'] * n0 + ['O'] * n1 + ['Y'] * n2 + ['B'] * n3 + ['P'] * n4 + ['W'] * n5
     name = random.choice(my_list)
     if name == 'R':
         color = "Red"
@@ -42,8 +42,6 @@ probability = array([[0.167, 0.167, 0.167, 0.167, 0.167, 0.167],
                      [0.167, 0.167, 0.167, 0.167, 0.167, 0.167],
                      [0.167, 0.167, 0.167, 0.167, 0.167, 0.167]])
 
-# As first iteration the computer choose deterministic the sequence of colours
-solution = ["Red", "Red", "Red", "Red"]
 
 print("Choose a sequence of 4 colours (red, orange, yellow, black, purple, white) ")
 input("Press Enter to continue...")
@@ -58,7 +56,11 @@ while i < numberIterationGame and gameOver is False:
 
     # Ask how many colors are in the correct position
     while True:
+        print(" Red  Orange  Yellow  Black  Purple  White")
         print(probability)
+        # Choose the new solution
+        solution = [calculate_solution(probability[0, :]), calculate_solution(probability[1, :]),
+                    calculate_solution(probability[2, :]), calculate_solution(probability[3, :])]
         print("Round " + str(i + 1) + " : ", solution)
         print("How many element are correct?")
         value = int(input("0 or 1 or 2 or 3 or 4: "))
@@ -106,8 +108,12 @@ while i < numberIterationGame and gameOver is False:
                     probability[position, x] += increase_NotSelected
 
         elif value == 1:  # Only one colour-position is correct
-            variation = 0.25 - probability[position, colour]
-            increase_Selected = 0.25  # It's 25% the correct position for the selected colour
+            if probability[position, colour] < 0.25:
+                increase_Selected = 0.25  # It's 25% the correct position for the selected colour
+            else:
+                increase_Selected = probability[position, colour] + 0.05
+
+            variation = probability[position, colour] - increase_Selected
             increase_NotSelected = variation / 5  # The remaining probability
             # count how many position are not zero
             for x in range(6):
@@ -116,12 +122,17 @@ while i < numberIterationGame and gameOver is False:
             # use count to calculate the increase and decrease
             if count >= 1:
                 # increase don't change
-                increase_NotSelected += (0.75 / 5) * count / (5 - count)
+                increase_NotSelected -= (0.75 / 5) * count / (5 - count)
 
 
         elif value == 2:
-            variation = 0.50 - probability[position, colour]
-            increase_Selected = 0.50  # It's 50% the correct position for the selected colour
+            if probability[position, colour] < 0.50:
+                increase_Selected = 0.50  # It's 50% the correct position for the selected colour
+            else:
+                increase_Selected = probability[position, colour] + 0.05
+
+            variation = probability[position, colour] - increase_Selected
+
             increase_NotSelected = variation/5  # The remaining probability 0.50/5
             # count how many position are zero
             for x in range(6):
@@ -132,11 +143,15 @@ while i < numberIterationGame and gameOver is False:
             # use count to calculate the increase and decrease
             if count >= 1:
                 # increase don't change
-                increase_NotSelected += (0.50 / 5) * count / (5 - count)
+                increase_NotSelected -= (0.50 / 5) * count / (5 - count)
 
         elif value == 3:
-            variation = 0.75 - probability[position, colour]
-            increase_Selected = 0.75  # It's 75% the correct position for the selected colour
+            if probability[position, colour] < 0.75:
+                increase_Selected = 0.75  # It's 75% the correct position for the selected colour
+            else:
+                increase_Selected = probability[position, colour] + 0.05
+
+            variation = probability[position, colour] - increase_Selected
             increase_NotSelected = variation / 5  # The remaining probability
             # count how many position are zero
             for x in range(6):
@@ -146,7 +161,7 @@ while i < numberIterationGame and gameOver is False:
             # use count to calculate the increase
             if count >= 1:
                 # increase don't change
-                increase_NotSelected += (0.25 / 5) * count / (5 - count)
+                increase_NotSelected -= (0.25 / 5) * count / (5 - count)
         if value != 0:
             if probability[position, colour] != 0.0:
                 probability[position, colour] = increase_Selected
@@ -174,9 +189,6 @@ while i < numberIterationGame and gameOver is False:
     # print(calculate_solution(probability[2, :]))
     # print(calculate_solution(probability[3, :]))
 
-    # Choose the new solution
-    solution = [calculate_solution(probability[0, :]), calculate_solution(probability[1, :]),
-                calculate_solution(probability[2, :]), calculate_solution(probability[3, :])]
 
 if value == 4:
     print()
