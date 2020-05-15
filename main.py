@@ -37,6 +37,7 @@ def calculate_solution(list):
 # Matrix
 # Straight: color (Red=R, Orange=O, Black=B, Purple=P, white=W, yellow=Y)
 # Column: the position ( 1, 2, 3, 4)
+# todo USE for to complete matrix
 probability = array([[0.167, 0.167, 0.167, 0.167, 0.167, 0.167],
                      [0.167, 0.167, 0.167, 0.167, 0.167, 0.167],
                      [0.167, 0.167, 0.167, 0.167, 0.167, 0.167],
