@@ -28,3 +28,5 @@ elif name == 'W':
 
 print(color)
 print(list)
+for x in range (4):
+    print(x)
