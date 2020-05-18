@@ -89,9 +89,12 @@ while i < numberIterationGame and gameOver is False:
         # In 3, 6 and 9 iterations choose the higher probability
         # In all the other iterations choose a random weighted solution
         if i % 3 == 0 and i!=0 :
-            while solution == solution_prec or solution == solution_prec_prec:
                 solution = [calculate_solution_max(probability[0, :]), calculate_solution_max(probability[1, :]),
                             calculate_solution_max(probability[2, :]), calculate_solution_max(probability[3, :])]
+                if solution == solution_prec or solution == solution_prec_prec:
+                    while solution == solution_prec or solution == solution_prec_prec:
+                        solution = [calculate_solution(probability[0, :]), calculate_solution(probability[1, :]),
+                                    calculate_solution(probability[2, :]), calculate_solution(probability[3, :])]
         else:
             while solution == solution_prec or solution == solution_prec_prec:
                 solution = [calculate_solution(probability[0, :]), calculate_solution(probability[1, :]),
@@ -248,7 +251,7 @@ if value == 4:
     print()
     print("---------- Computer won the game! :) -----------")
     print("---------- In " + str(i) + " iterations---------")
-    print("The solution is: " + solution)
+    print("The solution is: " + str(solution))
 elif value < 4:
     print()
     print("---------- You have win the game! :) -----------")
