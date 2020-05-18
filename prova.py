@@ -66,3 +66,9 @@ for x in range(4):
         vett_max[x] = col
 
 print (vett_max)
+
+sol1= ["Red", "Red", "Red", "Red"]
+sol2= ["Red", "Red", "Red", "Red"]
+sol3= ["Red", "Orange", "Red", "Red"]
+print (sol1==sol2)
+print (sol1==sol3)

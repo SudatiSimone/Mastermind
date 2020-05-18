@@ -68,6 +68,8 @@ probability = array([[0.167, 0.167, 0.167, 0.167, 0.167, 0.167],
                      [0.167, 0.167, 0.167, 0.167, 0.167, 0.167]])
 
 solution = ["Red", "Red", "Red", "Red"]
+solution_prec = ["Red", "Red", "Red", "Red"]
+solution_prec_prec= ["Red", "Red", "Red", "Red"]
 print("Choose a sequence of 4 colours (red, orange, yellow, black, purple, white) ")
 input("Press Enter to continue...")
 
@@ -87,11 +89,13 @@ while i < numberIterationGame and gameOver is False:
         # In 3, 6 and 9 iterations choose the higher probability
         # In all the other iterations choose a random weighted solution
         if i % 3 == 0 and i!=0 :
-            solution = [calculate_solution_max(probability[0, :]), calculate_solution_max(probability[1, :]),
-                        calculate_solution_max(probability[2, :]), calculate_solution_max(probability[3, :])]
+            while solution == solution_prec or solution == solution_prec_prec:
+                solution = [calculate_solution_max(probability[0, :]), calculate_solution_max(probability[1, :]),
+                            calculate_solution_max(probability[2, :]), calculate_solution_max(probability[3, :])]
         else:
-            solution = [calculate_solution(probability[0, :]), calculate_solution(probability[1, :]),
-                        calculate_solution(probability[2, :]), calculate_solution(probability[3, :])]
+            while solution == solution_prec or solution == solution_prec_prec:
+                solution = [calculate_solution(probability[0, :]), calculate_solution(probability[1, :]),
+                            calculate_solution(probability[2, :]), calculate_solution(probability[3, :])]
         print("Round " + str(i + 1) + " : ", solution)
         print("How many element are correct?")
         value = int(input("0 or 1 or 2 or 3 or 4: "))
@@ -229,6 +233,11 @@ while i < numberIterationGame and gameOver is False:
                     if probability[y, t] != 1.0:
                         probability[y, t] = 0.0
 
+    if i==0: # first iteration
+        solution_prec=solution
+    else:
+        solution_prec_prec= solution_prec
+        solution_prec = solution
     i += 1
     # print(calculate_solution(probability[0, :]))
     # print(calculate_solution(probability[1, :]))
