@@ -2,6 +2,7 @@ from numpy import *
 import random
 
 
+# function that calculate in a weighted random way the colours
 def calculate_solution(list):
     color = "Red"  # di default
     n0 = list[0] * 100
@@ -34,6 +35,29 @@ def calculate_solution(list):
     return color
 
 
+# function that calculate the solution (the colours) with higher probability
+def calculate_solution_max(lista):
+    max_list = 0
+    col = "Red"
+    for y in range(6):
+        if y == 0:
+            max_list = lista[y]
+            col = "Red"
+        elif max_list < lista[y]:
+            max_list = lista[y]
+            if y == 1:
+                col = "Orange"
+            elif y == 2:
+                col = "Yellow"
+            elif y == 3:
+                col = "Black"
+            elif y == 4:
+                col = "Purple"
+            elif y == 5:
+                col = "White"
+    return col
+
+
 # Matrix
 # Straight: color (Red=R, Orange=O, Black=B, Purple=P, white=W, yellow=Y)
 # Column: the position ( 1, 2, 3, 4)
@@ -43,11 +67,12 @@ probability = array([[0.167, 0.167, 0.167, 0.167, 0.167, 0.167],
                      [0.167, 0.167, 0.167, 0.167, 0.167, 0.167],
                      [0.167, 0.167, 0.167, 0.167, 0.167, 0.167]])
 
+solution = ["Red", "Red", "Red", "Red"]
 print("Choose a sequence of 4 colours (red, orange, yellow, black, purple, white) ")
 input("Press Enter to continue...")
 
 i = 0
-numberIterationGame = 10  # numbers of rounds available for computer to guess
+numberIterationGame = 12  # numbers of rounds available for computer to guess
 gameOver = False
 increase_Selected = 0
 increase_NotSelected = 0
@@ -59,8 +84,14 @@ while i < numberIterationGame and gameOver is False:
         print(" Red  Orange  Yellow  Black  Purple  White")
         print(probability)
         # Choose the new solution
-        solution = [calculate_solution(probability[0, :]), calculate_solution(probability[1, :]),
-                    calculate_solution(probability[2, :]), calculate_solution(probability[3, :])]
+        # In 3, 6 and 9 iterations choose the higher probability
+        # In all the other iterations choose a random weighted solution
+        if i % 3 == 0 and i!=0 :
+            solution = [calculate_solution_max(probability[0, :]), calculate_solution_max(probability[1, :]),
+                        calculate_solution_max(probability[2, :]), calculate_solution_max(probability[3, :])]
+        else:
+            solution = [calculate_solution(probability[0, :]), calculate_solution(probability[1, :]),
+                        calculate_solution(probability[2, :]), calculate_solution(probability[3, :])]
         print("Round " + str(i + 1) + " : ", solution)
         print("How many element are correct?")
         value = int(input("0 or 1 or 2 or 3 or 4: "))
@@ -199,43 +230,21 @@ while i < numberIterationGame and gameOver is False:
                         probability[y, t] = 0.0
 
     i += 1
-    # print("miao")
     # print(calculate_solution(probability[0, :]))
     # print(calculate_solution(probability[1, :]))
     # print(calculate_solution(probability[2, :]))
     # print(calculate_solution(probability[3, :]))
-vett_max = [0, 0, 0, 0]
-col = "Red"
-for x in range(4):
-    maximum = 0
-    for y in range(6):
-        if y == 0:
-            maximum = probability[x, y]
-            col = "Red"
-        elif maximum < probability[x, y]:
-            maximum = probability[x, y]
-            if y == 1:
-                col = "Orange"
-            elif y == 2:
-                col = "Yellow"
-            elif y == 3:
-                col = "Black"
-            elif y == 4:
-                col = "Purple"
-            elif y == 5:
-                col = "White"
-        vett_max[x] = col
 
 if value == 4:
     print()
     print("---------- Computer won the game! :) -----------")
     print("---------- In " + str(i) + " iterations---------")
+    print("The solution is: " + solution)
 elif value < 4:
     print()
     print("---------- You have win the game! :) -----------")
     print("---------- In " + str(i) + " iterations---------")
     print("The algorithm tell me that the solution is: ")
-    print (vett_max)
-
-
-
+    solution = [calculate_solution_max(probability[0, :]), calculate_solution_max(probability[1, :]),
+                calculate_solution_max(probability[2, :]), calculate_solution_max(probability[3, :])]
+    print(solution)
