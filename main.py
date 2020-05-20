@@ -148,9 +148,9 @@ while i < numberIterationGame and gameOver is False:
         elif value == 1:  # Only one colour-position is correct: It's the worst case. Information is very low
 
             if 0.0 < probability[position, colour] < 0.10:
-                increase_Selected = probability[position, colour] + 0.025
+                increase_Selected = probability[position, colour] + 0.020
             elif 0.15 <= probability[position, colour] < 0.30:
-                increase_Selected = probability[position, colour] + 0.05
+                increase_Selected = probability[position, colour] + 0.025
             elif 0.30 <= probability[position, colour] <= 0.75:
                 increase_Selected = probability[position, colour] - 0.05
             else:
@@ -194,11 +194,11 @@ while i < numberIterationGame and gameOver is False:
         elif value == 3:
 
             if 0.0 < probability[position, colour] < 0.15:
-                increase_Selected = probability[position, colour] + 0.20
-            elif 0.15 <= probability[position, colour] < 0.30:
                 increase_Selected = probability[position, colour] + 0.25
+            elif 0.15 <= probability[position, colour] < 0.30:
+                increase_Selected = probability[position, colour] + 0.20
             elif 0.30 <= probability[position, colour] < 0.45:
-                increase_Selected = probability[position, colour] + 0.30
+                increase_Selected = probability[position, colour] + 0.25
             elif 0.45 <= probability[position, colour] < 0.75:
                 increase_Selected = 0.75
             else:
