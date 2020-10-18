@@ -1,4 +1,5 @@
 # Mastermind
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) 
 
 My program in python to solve mastermind game.
 
