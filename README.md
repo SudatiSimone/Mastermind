@@ -1,5 +1,5 @@
 # Mastermind
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) 
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)  [![GitHub contributors](https://img.shields.io/github/contributors/SudatiSimone/Mastermind.svg)](https://GitHub.com/SudatiSimone/Mastermind/graphs/contributors/) 
 
 My program in python to solve mastermind game.
 
