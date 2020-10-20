@@ -1,5 +1,8 @@
 # Mastermind
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)  [![GitHub contributors](https://img.shields.io/github/contributors/SudatiSimone/Mastermind.svg)](https://GitHub.com/SudatiSimone/Mastermind/graphs/contributors/) 
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://sudati-simone.mit-license.org/SimoneSudati/License_MIT.com)
+[![Version: 0.0.1](https://img.shields.io/badge/Version-0.0.1-blue.svg)](https://github.com/SudatiSimone/Personal_Portfolio/blob/master/VERSION)
+[![GitHub contributors](https://img.shields.io/github/contributors/SudatiSimone/Mastermind.svg)](https://GitHub.com/SudatiSimone/Mastermind/graphs/contributors/) 
 
 My program in python to solve mastermind game.
 
